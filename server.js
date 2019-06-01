@@ -22,9 +22,22 @@ app.post('/save', function(req, res){
     });
 });
 
-app.put('/update', function(req, res){
-    
+app.put('/update/:id', function(req, res){
+    User.findOne({_id : req.params.id}, function(err, user){
+        if(err) res.send(err);
+        user.name = req.body.name;
+        user.save(user, function(err, user){
+            res.send({message : "updated....."})
+        });
+    });
 })
+
+app.delete('/delete/:id', function(req, res){
+    User.deleteOne({_id : req.params.id}, function(err, user){
+        if(err) res.send(err);
+        res.send({message : "deleted.."});
+    });
+});
 
 app.get('/', function(req, res){
     User.find({}, function(err, users){
