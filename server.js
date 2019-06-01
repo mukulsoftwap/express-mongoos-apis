@@ -17,7 +17,7 @@ app.post('/save', function(req, res){
     user.email =  req.body.email;
     user.password =  req.body.password;
     user.save(user, function(err, user){
-        if(err) res.send(err);
+        if(err) return res.status(400).send({error : err.message});
         res.send({message : "saved...."});
     });
 });
@@ -35,7 +35,7 @@ app.put('/update/:id', function(req, res){
 app.delete('/delete/:id', function(req, res){
     User.deleteOne({_id : req.params.id}, function(err, user){
         if(err) res.send(err);
-        res.send({message : "deleted.."});
+        res.send({message : "deleted.."}); 
     });
 });
 
